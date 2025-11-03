@@ -222,8 +222,10 @@ export function Calculator({
     reset,
     watch,
   } = useForm<CalculationFormSchema>({
-    resolver: zodResolver(calculationFormSchema),
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    resolver: zodResolver(calculationFormSchema) as any,
     defaultValues: initialFormValues,
+    mode: "onSubmit",
   });
 
   // ローカルストレージに保存されたフォーム値があれば初期化時に復元する。
@@ -271,7 +273,7 @@ export function Calculator({
   }, [hasBootstrappedForm, watchedValues]);
 
   // Server Actions を通じて損益計算を行い、結果をクライアント側で即時反映する。
-  const onSubmit = handleSubmit((values) => {
+  const onSubmit = handleSubmit((values: CalculationFormSchema) => {
     setServerMessage(null);
     startTransition(async () => {
       const result = await calculateProfitAction(values);
@@ -304,6 +306,7 @@ export function Calculator({
     <div className="space-y-8 md:grid md:grid-cols-[minmax(0,380px)_1fr] md:gap-8 md:space-y-0 md:items-start">
       <form
         onSubmit={onSubmit}
+        noValidate
         className="mx-auto w-full max-w-xl space-y-6 rounded-2xl border border-zinc-200 bg-white p-6 shadow-sm md:mx-0"
       >
         <div>
@@ -331,7 +334,7 @@ export function Calculator({
               min={field.min}
               max={field.max}
               className="w-full rounded-lg border border-zinc-300 px-3 py-2 text-sm focus:border-emerald-500 focus:outline-none focus:ring-2 focus:ring-emerald-200"
-              {...register(field.name, { valueAsNumber: true })}
+              {...register(field.name)}
             />
             <p className="text-xs text-zinc-500">{field.helperText}</p>
             {formState.errors[field.name] && (
