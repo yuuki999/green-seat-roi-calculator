@@ -37,14 +37,16 @@ export default async function Image() {
         >
           <div
             style={{
-              fontSize: 72,
+              fontSize: 64,
               fontWeight: 700,
               color: "white",
               textAlign: "center",
-              lineHeight: 1.2,
+              lineHeight: 1.3,
             }}
           >
-            グリーン車、本当にお得なの？
+            通勤時間を価値に変えて、
+            <br />
+            グリーン車利用を賢く判断
           </div>
           <div
             style={{
@@ -52,6 +54,7 @@ export default async function Image() {
               color: "rgba(255, 255, 255, 0.95)",
               textAlign: "center",
               lineHeight: 1.4,
+              marginTop: "16px",
             }}
           >
             副業時給3000円なら年間26万円得する計算🚄
